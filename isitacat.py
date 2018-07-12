@@ -10,12 +10,20 @@ def unpickle(file):
     return dict
 
 
+names = unpickle('cifar-10-batches-py/batches.meta')
+print(names)
+
 dic = unpickle('cifar-10-batches-py/data_batch_1')
 
-print(dic)
+img_big = dic[b"data"][123]
+img = []
+for i in range(1024):
+    img.append([img_big[i], img_big[i+1024], img_big[i+1024*2]])
 
-imgR = dic[b"data"][100][:1024]
-imgR = np.reshape(img, (32, 32))
+
+img = np.reshape(img, (32, 32, 3))
+
+
 imgplot = plt.imshow(img)
 plt.show()
 
