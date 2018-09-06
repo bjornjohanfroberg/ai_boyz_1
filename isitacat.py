@@ -82,7 +82,7 @@ for _ in range(700):
         img.append([img_big[i], img_big[i + 1024], img_big[i + 1024 * 2]])
     img = np.reshape(img, (32, 32, 3))
     batch_x_test.append(img)
-    batch_y_test.append([dic[b"labels"][index]])
+    batch_y_test.append([dic[b"labels"][index] == 3])
     index = index + 1
 
 
