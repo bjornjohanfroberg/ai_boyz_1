@@ -32,9 +32,13 @@ print(X_train.shape)
 X_train = X_train / 255
 X_test = X_test / 255
 
+y_train[y_train != 1] = 0
+y_test[y_test != 1] = 0
+
 y_train = np_utils.to_categorical(y_train)
 y_test = np_utils.to_categorical(y_test)
 num_classes = y_test.shape[1]
+print(num_classes)
 
 def base_model():
     # create model
@@ -54,5 +58,6 @@ def base_model():
 model = base_model()
 
 # Fit the model
-tb = TensorBoard(log_dir='./logs/initial_setting')
-history = model.fit(X_train, y_train, validation_data=(X_test, y_test), epochs=2, batch_size=64, callbacks=[tb])
+tb = TensorBoard(log_dir='./logs3/initial_setting')
+history = model.fit(X_train, y_train, validation_data=(X_test, y_test), epochs=2, batch_size=1000, callbacks=[tb])
+model.save('my_model.h5')
