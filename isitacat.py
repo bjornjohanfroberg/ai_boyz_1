@@ -20,19 +20,33 @@ name_index = names[b"label_names"].index(b"cat")
 # Get data
 dic = unpickle('cifar-10-batches-py/data_batch_1')
 
+#IMG = np.array(dic[b"data"]).reshape(3, 32, 32, 10000)
+IMG = []
+for i in range(0, 1000):
+    img = np.array(dic[b"data"][i]).reshape(3, 32, 32)
+    img = np.dstack((img[0], img[1], img[2]))
+    IMG.append(img)
+
+IMG = np.array(IMG)
+print(IMG.shape)
+
+'''
 # Find index of first cat
 first = dic[b"labels"].index(name_index)
-
-
-
-#plt.imshow(img)
-#plt.show()
-
+img = np.array(dic[b"data"][first]).reshape(3, 32, 32)
+img = np.dstack((img[0], img[1], img[2]))
+plt.imshow(img)
+plt.show()
+print(img.shape)
+'''
 
 cat_ind = [index for index, value in enumerate(dic[b"labels"]) if value == name_index]
 
 print("There is %d cats!!!!!! :D" % len(cat_ind))
+y = dic[b"labels"]
 
+
+'''
 #x = tf.placeholder(tf.float32, [None, len(dic[b"data"][first])])
 x = tf.placeholder(tf.float32, [None, 32, 32, 3])
 
@@ -119,3 +133,4 @@ with tf.Session() as sess:
 
 
 
+'''
