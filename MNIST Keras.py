@@ -19,4 +19,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # Confusion matrix for assessment step
-from sklearn.metrics import confusion_matrix
+#from sklearn.metrics import confusion_matrix
+
+(X_train, y_train), (X_test, y_test) = mnist.load_data()
+plt.imshow(X_train[10], cmap='gray')
+
