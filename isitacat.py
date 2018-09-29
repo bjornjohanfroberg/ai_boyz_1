@@ -44,43 +44,23 @@ name_index = names[b"label_names"].index(b"cat")
 
 # Get data
 dic = unpickle('cifar-10-batches-py/data_batch_1')
-
-#IMG = np.array(dic[b"data"]).reshape(3, 32, 32, 10000)
-IMG = []
-for i in range(0, 10000):
-    img = np.array(dic[b"data"][i]).reshape(3, 32, 32)
-    img = np.dstack((img[0], img[1], img[2]))
-    IMG.append(img)
-
-IMG = np.array(IMG)
-print(IMG.shape)
-X_train = IMG
-X_test = X_train
-X_train = X_train / 255
-X_test = X_test / 255
-
-'''
-# Find index of first cat
-first = dic[b"labels"].index(name_index)
-img = np.array(dic[b"data"][first]).reshape(3, 32, 32)
-img = np.dstack((img[0], img[1], img[2]))
-plt.imshow(img)
-plt.show()
-print(img.shape)
-'''
-
 cat_ind = [index for index, value in enumerate(dic[b"labels"]) if value == name_index]
 
-print("There is %d cats!!!!!! :D" % len(cat_ind))
-y_train = np.array(dic[b"labels"])
-y_train[y_train != name_index] = 0
-y_train[y_train == name_index] = 1
-y_test = y_train
 
-y_train = np_utils.to_categorical(y_train)
-y_test = np_utils.to_categorical(y_test)
-num_classes = y_test.shape[1]
-print(num_classes)
+def getdata(start, end):
+    x = []
+    for i in range(start, end):
+        img = np.array(dic[b"data"][i]).reshape(3, 32, 32)
+        img = np.dstack((img[0], img[1], img[2]))
+        x.append(img)
+
+    x = np.array(x)
+    y = np.array(dic[b"labels"])[start:end]
+    y[y != name_index] = 0
+    y[y == name_index] = 1
+
+    return x / 255, np_utils.to_categorical(y)
+
 
 def base_model():
     # create model
@@ -98,10 +78,14 @@ def base_model():
     return model
 
 
-# build the model
+X_train, Y_train = getdata(0, 8000)
+X_test, Y_test = getdata(8001, 10000)
+
+num_classes = Y_test.shape[1]
+
 model = base_model()
 
-# Fit the model
 tb = TensorBoard(log_dir='./logs/initial_setting')
-history = model.fit(X_train, y_train, validation_data=(X_test, y_test), epochs=1000, batch_size=128, callbacks=[tb])
-model.save('my_model_cat.h5')
+history = model.fit(X_train, Y_train, validation_data=(X_test, Y_test), epochs=40, batch_size=128, callbacks=[tb])
+model.save('my_model_cat_gpu.h5')
+
