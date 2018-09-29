@@ -1,34 +1,14 @@
-import tensorflow as tf
-import numpy as np
-import matplotlib.image as mpimg
 import matplotlib as mpl
-mpl.use('TkAgg')
-import matplotlib.pyplot as plt
-# One-hot encoding
-from keras.utils import np_utils
-from keras.callbacks import TensorBoard, EarlyStopping
-# The package for importing the dataset (already provided by Keras)
-from keras.datasets import mnist
-
-# Packages for defining the architecture of our model
-from keras.models import Sequential
-from keras.layers import Dense, Flatten, BatchNormalization
-from keras.layers.convolutional import Conv2D, MaxPooling2D
-
-# One-hot encoding
-from keras.utils import np_utils
-
-# Callbacks for training
-from keras.callbacks import TensorBoard, EarlyStopping
-
-# Ploting
-import matplotlib.pyplot as plt
-
-# Ndarray computations
 import numpy as np
+from keras.models import Sequential
+from keras.layers import Dense, Flatten
+from keras.layers.convolutional import Conv2D, MaxPooling2D
+from keras.utils import np_utils
+from keras.callbacks import TensorBoard
 
-# Confusion matrix for assessment step
-#from sklearn.metrics import confusion_matrix
+
+# Marcus!!!! GLÖM EJ!!!!
+mpl.use('TkAgg')
 
 
 def unpickle(file):
